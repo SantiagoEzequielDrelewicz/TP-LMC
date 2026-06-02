@@ -1,6 +1,5 @@
-.venv/
+*env*
 *mypy*
-Dataset_A/
-Dataset_B/
-Dataset_C/
-Dataset_D/
+__pycache__
+*.pyc
+.~lock*
