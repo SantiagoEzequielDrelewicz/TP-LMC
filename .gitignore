@@ -1,0 +1,6 @@
+.venv/
+*mypy*
+Dataset_A/
+Dataset_B/
+Dataset_C/
+Dataset_D/
