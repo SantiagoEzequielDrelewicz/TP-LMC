@@ -12,7 +12,7 @@ Trabajo práctico de Laboratorio de Métodos Cuantitativos Aplicado a la Gestió
 |                    |                           |
 |                    |                           |
 |                    |                           |
-|                    |                           |
+| Didier Detchemendy | did1310                   |
 
 ---
 
