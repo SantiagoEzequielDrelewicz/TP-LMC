@@ -148,6 +148,15 @@ y se estiman los parámetros correspondientes mediante técnicas de regresión y
 | Estimación 2026                                              | SOL         |
 | Integración del modelo, estructura troncal y visualizaciones | DIDIER      |
 
+## Update distribución de Tareas - 2/6/2026
+## Approach aproximación Lineal
+| Tarea                                                        | Responsable |
+| ------------------------------------------------------------ | ----------- |
+| Regresión lineal (2025)                                      | YANI        |
+| Estimación (2026)                                            | IVAN        |
+| B por cliente + tratamiento HDD/CDD                          | SANTI       |
+| Prueba pendiente regresión - Beta_c y Beta_f                 | SOL         |
+| Integración del modelo, estructura troncal, visualizaciones, Prueba preliminar de regresión lineal (2025) | DIDIER      |
 ---
 
 ## Objetivos Pendientes
