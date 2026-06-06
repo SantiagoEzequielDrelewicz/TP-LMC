@@ -190,11 +190,14 @@ $$
 * [x] Calcular HDD mensual.
 * [x] Calcular CDD mensual.
 * [x] Estimar B por cliente.
-* [ ] Estimar βC.
-* [ ] Estimar βF.
-* [ ] Construir el modelo completo.
-* [ ] Validar resultados.
-* [ ] Generar gráficos finales.
+* [ ] Estimar βC (Regresión lineal compuesta).
+* [ ] Estimar βF (Regresión lineal compuesta).
+* [x] Adaptación a Regresión lineal simple.
+* [x] Validación de Regresión lineal simple.
+* [x] Construir el modelo completo.
+* [ ] Validar resultados estimación 2026.
+* [ ] Generar gráficos análisis βC y βF.
+* [x] Generar gráficos análisis Regresión lineal simple 2025.
 * [ ] Elaborar conclusiones.
 
 ---
