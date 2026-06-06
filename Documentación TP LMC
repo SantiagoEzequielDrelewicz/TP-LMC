@@ -1,0 +1,207 @@
+# TP-LMC
+Trabajo práctico de Laboratorio de Métodos Cuantitativos Aplicado a la Gestión
+
+# Análisis y Estimación de Consumo Energético mediante HDD/CDD
+
+## Integrantes
+
+| Nombre             | GitHub                    |
+| ------------------ | ------------------------- |
+| Santiago Drelewicz | SantiagoEzequielDrelewicz |
+|                    |                           |
+|                    |                           |
+|                    |                           |
+|                    |                           |
+| Didier Detchemendy | did1310                   |
+
+---
+
+## Descripción del Proyecto
+
+Este trabajo tiene como objetivo modelar y estimar el consumo energético a partir de variables climáticas utilizando los indicadores **Heating Degree Days (HDD)** y **Cooling Degree Days (CDD)**.
+
+La metodología propuesta busca:
+
+* Integrar múltiples fuentes de datos en un único dataset.
+* Calcular indicadores climáticos mensuales.
+* Estimar parámetros del modelo de consumo.
+* Analizar la relación entre consumo energético y condiciones climáticas.
+* Generar proyecciones y visualizaciones para el año 2026.
+
+---
+
+## Estructura del Modelo
+
+El modelo considera una temperatura de confort:
+
+$$
+T_c = 20^\circ C
+$$
+
+A partir de ella se calculan:
+
+### HDD (Heating Degree Days)
+
+Representa la necesidad de refrigeración.
+
+$$
+HDD_d = \max(T_{promedio} - T_c, 0)
+$$
+
+Luego:
+
+$$
+HDD_{mes} = promedio(HDD_d)
+$$
+
+---
+
+### CDD (Cooling Degree Days)
+
+Representa la necesidad de calefacción.
+
+$$
+CDD_d = \max(T_c - T_{promedio}, 0)
+$$
+
+Posteriormente se agregan los valores diarios para obtener el indicador mensual.
+
+---
+
+## Flujo General de Procesamiento
+
+### 1. Integración de datasets
+
+Se combinan las fuentes de datos disponibles:
+
+```python
+df_dataset = pd.concat([
+    dataset_a,
+    dataset_b,
+    dataset_c,
+    dataset_d
+])
+```
+
+---
+
+### 2. Obtención de B_cliente consumo por cliente
+
+---
+
+### 3. Cálculo de HDD y CDD
+
+A partir de la tabla de temperaturas:
+
+```python
+T_DIA_HORA
+```
+
+Se generan:
+
+* HDD diario
+* HDD mensual
+* CDD diario
+* CDD mensual
+
+---
+
+### 4. Construcción de la función de consumo
+
+La variable objetivo será:
+
+```text
+CONSUMO TOTAL FINAL
+```
+
+Agrupada por mes y sumada sobre todos los clientes.
+
+Se define:
+
+$$
+C(mes) = B + \beta_C CDD(mes) + \beta_H HDD(mes)
+$$
+
+como la evolución temporal del consumo mensual.
+
+---
+
+### 5. Ajuste del modelo
+
+Se estudia la relación:
+
+$$
+Consumo = f(HDD, CDD)
+$$
+
+y se estiman los parámetros correspondientes mediante técnicas de regresión y análisis estadístico.
+
+---
+
+# Modelo adaptado a regresión lineal
+
+$$
+c(t) = B + \beta_c \cdot HDD(t) + \beta_f \cdot CDD(t)
+$$
+
+$$
+c(X(t)) = B + m \cdot X(t)  
+$$
+
+- $B$: consumo base del cliente  
+- $X(t)$: Tanto $HDD(t)$ como $CDD(t)$ varían en función del tiempo de forma aproximadamente cíclica. Sabiendo que tenemos máximos de calor en verano, mínimos en invierno y que las desviaciones de la temperatura en valor absoluto con respecto a la $T_{comfort}$ alcanzan mínimos en otoño y primavera, podemos pensar $X(t)$ como una combinación de senos y cosenos tomando $HDD(t)$ y $CDD(t)$ como amplitudes de sus respectivas funciones de onda, siendo una suposición inicial que $X(t)$ adoptaba la siguiente forma general:
+$$
+$$
+$ X(t) = \left|\overline{HDD}(t)\cdot sin((\frac{\pi}{12})\cdot t)\right| + \left|\overline{CDD}(t)\cdot cos((\frac{\pi}{12})\cdot t)\right|$
+---
+
+No obstante, siendo HDD y CDD diferencias de temperatura con respecto a $T_{comfort}$, debido a que HDD disminuye cuando CDD se incrementa, y viceversa, se planteó una igualdad más simple, detallada mediante la expresión visible a continuación:
+
+$$
+X(t) = HDD(t) + CDD(t)
+$$
+
+
+
+## Distribución de Tareas
+
+| Tarea                                                        | Responsable |
+| ------------------------------------------------------------ | ----------- |
+| Estimación $β_C$ (2025)                                         | YANI        |
+| Estimación $β_H$ (2025)                                         | IVAN        |
+| B por cliente + tratamiento HDD/CDD                          | SANTI       |
+| Estimación 2026                                              | SOL         |
+| Integración del modelo, estructura troncal y visualizaciones | DIDIER      |
+
+## Update distribución de Tareas - 2/6/2026
+## Approach aproximación Lineal
+| Tarea                                                        | Responsable |
+| ------------------------------------------------------------ | ----------- |
+| Regresión lineal (2025)                                      | YANI        |
+| Estimación (2026)                                            | IVAN        |
+| B por cliente + tratamiento HDD/CDD                          | SANTI       |
+| Prueba pendiente regresión - Beta_c y Beta_f                 | SOL         |
+| Integración del modelo, estructura troncal, visualizaciones, Prueba preliminar de regresión lineal (2025) | DIDIER      |
+---
+
+## Objetivos Pendientes
+
+* [x] Integrar todos los datasets.
+* [x] Calcular HDD mensual.
+* [x] Calcular CDD mensual.
+* [x] Estimar B por cliente.
+* [ ] Estimar βC.
+* [ ] Estimar βF.
+* [ ] Construir el modelo completo.
+* [ ] Validar resultados.
+* [ ] Generar gráficos finales.
+* [ ] Elaborar conclusiones.
+
+---
+
+## Resultados Esperados
+
+* Modelo de consumo energético basado en variables climáticas.
+* Estimación de parámetros globales y por cliente.
+* Predicción y análisis para el año 2026.
+* Visualizaciones que permitan interpretar el impacto de HDD y CDD sobre el consumo.
