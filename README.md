@@ -138,6 +138,31 @@ y se estiman los parámetros correspondientes mediante técnicas de regresión y
 
 ---
 
+# Modelo adaptado a regresión lineal
+
+$$
+c(t) = B + \beta_c \cdot HDD(t) + \beta_f \cdot CDD(t)
+$$
+
+$$
+c(X(t)) = B + m \cdot X(t)  
+$$
+
+- $B$: consumo base del cliente  
+- $X(t)$: Tanto $HDD(t)$ como $CDD(t)$ varían en función del tiempo de forma aproximadamente cíclica. Sabiendo que tenemos máximos de calor en verano, mínimos en invierno y que las desviaciones de la temperatura en valor absoluto con respecto a la $T_{comfort}$ alcanzan mínimos en otoño y primavera, podemos pensar $X(t)$ como una combinación de senos y cosenos tomando $HDD(t)$ y $CDD(t)$ como amplitudes de sus respectivas funciones de onda, siendo una suposición inicial que $X(t)$ adoptaba la siguiente forma general:
+$$
+$$
+$ X(t) = \left|\overline{HDD}(t)\cdot sin((\frac{\pi}{12})\cdot t)\right| + \left|\overline{CDD}(t)\cdot cos((\frac{\pi}{12})\cdot t)\right|$
+---
+
+No obstante, siendo HDD y CDD diferencias de temperatura con respecto a $T_{comfort}$, debido a que HDD disminuye cuando CDD se incrementa, y viceversa, se planteó una igualdad más simple, detallada mediante la expresión visible a continuación:
+
+$$
+X(t) = HDD(t) + CDD(t)
+$$
+
+
+
 ## Distribución de Tareas
 
 | Tarea                                                        | Responsable |
@@ -165,12 +190,15 @@ y se estiman los parámetros correspondientes mediante técnicas de regresión y
 * [x] Calcular HDD mensual.
 * [x] Calcular CDD mensual.
 * [x] Estimar B por cliente.
-* [ ] Estimar βC.
-* [ ] Estimar βF.
-* [ ] Construir el modelo completo.
-* [ ] Validar resultados.
-* [ ] Generar gráficos finales.
-* [ ] Elaborar conclusiones.
+* [x] Estimar βC (Regresión lineal compuesta).
+* [x] Estimar βF (Regresión lineal compuesta).
+* [x] Adaptación a Regresión lineal simple.
+* [x] Validación de Regresión lineal simple.
+* [x] Construir el modelo completo.
+* [x] Validar resultados estimación 2026.
+* [x] Generar gráficos análisis βC y βF.
+* [x] Generar gráficos análisis Regresión lineal simple 2025.
+* [x] Elaborar conclusiones.
 
 ---
 
