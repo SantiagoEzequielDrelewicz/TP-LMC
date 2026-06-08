@@ -1,0 +1,204 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\geometry{margin=2.5cm}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    urlcolor=blue!50!black,
+    citecolor=blue!50!black
+}
+\sisetup{
+    output-decimal-marker={,},
+    round-mode=places,
+    round-precision=2
+}
+
+\newcommand{\figplaceholder}[2]{%
+    \IfFileExists{#1}{%
+        \includegraphics[width=\linewidth]{#1}%
+    }{%
+        \fbox{\parbox[c][5cm][c]{0.9\linewidth}{\centering
+        Figura pendiente: \texttt{\detokenize{#1}}\\
+        #2}}%
+    }%
+}
+
+\title{\textbf{Estimacion del consumo energetico a partir de variables climaticas HDD y CDD}}
+\author{Trabajo Practico Grupal -- Laboratorio de Metodos Cuantitativos Aplicados a la Gestion}
+\date{1er cuatrimestre 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\textbf{Integrantes:} Santiago Drelewicz, Didier Detchemendy y equipo.\\
+\textbf{Repositorio:} \url{https://github.com/SantiagoEzequielDrelewicz/TP-LMC}
+\end{center}
+
+\begin{abstract}
+El trabajo analiza si el consumo energetico mensual puede explicarse y estimarse a partir de variables climaticas. Para ello se integraron datos de consumo de clientes T1, registros horarios de temperatura y una serie de demanda diaria. Se construyeron indicadores mensuales de Heating Degree Days (HDD) y Cooling Degree Days (CDD), se evaluaron tres modelos de regresion y se comparo el modelo seleccionado contra el metodo de estimacion utilizado por la empresa. El mejor ajuste sobre 2025 fue una regresion lineal multiple con HDD y CDD separados, con $R^2=0{,}8572$. Sin embargo, al validar enero-abril de 2026, el modelo de la empresa obtuvo menor error promedio absoluto porcentual que el modelo puramente termico.
+\end{abstract}
+
+\section{Introduccion}
+
+El consumo electrico residencial presenta una relacion directa con las condiciones climaticas: temperaturas alejadas de un umbral de confort suelen aumentar el uso de calefaccion o refrigeracion. En este contexto, la pregunta principal del analisis es: \textit{¿en que medida los indicadores termicos HDD y CDD permiten explicar el consumo mensual y estimar consumos futuros para clientes T1?}
+
+Responder esta pregunta es relevante porque una estimacion precisa del consumo permite planificar demanda, evaluar desvios y comparar modelos operativos. El analisis se concentro en clientes de tarifa T1 y en consumos de 2025 para ajustar los modelos. Luego se contrastaron predicciones de enero a abril de 2026 contra el consumo total final observado y contra una estimacion basada en factor estacional.
+
+\section{Datos y metodologia}
+
+Se utilizaron tres fuentes principales: datasets de consumo historico 2025, temperaturas horarias de 2025 y 2026, y una tabla de demanda diaria consolidada. Los cuatro archivos de consumo 2025 se unificaron en un unico DataFrame de 711.829 filas y 26 columnas. La base presentaba 768.543 valores nulos, equivalentes al 4,15\% de las celdas. La mayor parte correspondia a \texttt{FECHA BAJA}, con 707.614 nulos, lo que resultaba esperable porque la mayoria de los clientes seguia activa.
+
+Las principales transformaciones fueron:
+
+\begin{itemize}
+    \item Se excluyeron clientes con fecha de baja para trabajar sobre clientes activos.
+    \item Se convirtieron columnas numericas almacenadas como texto con coma decimal, como \texttt{PROMEDIO CONSUMO}, \texttt{FACTOR ESTACIONAL} y \texttt{CONSUMO TOTAL FINAL}.
+    \item Se transformo \texttt{REFERENCIA} al mes correspondiente, dado que todos los registros de entrenamiento pertenecian a 2025.
+    \item Para evitar duplicacion mensual por cliente, se conservo la ultima lectura de cada combinacion cliente-mes.
+    \item Se agregaron consumos por mes y se expresaron en GWh para estabilizar la escala del ajuste.
+\end{itemize}
+
+Para representar el efecto climatico se fijo una temperatura de confort $T_c=20^\circ C$. A partir de temperaturas horarias se calcularon desvios positivos respecto de ese umbral:
+
+\begin{align}
+HDD &= \max(T - T_c, 0),\\
+CDD &= |\min(T - T_c, 0)|.
+\end{align}
+
+Luego se promediaron los valores horarios a nivel diario y mensual. Con esos indicadores se evaluaron tres modelos:
+
+\begin{align}
+\text{Modelo 1: } C(t) &= B + \beta_c HDD(t) + \beta_f CDD(t),\\
+\text{Modelo 2: } C(t) &= B + m \cdot [HDD(t)+CDD(t)],\\
+\text{Modelo 3: } C(t) &= B + m \cdot X_{estacional}(t),
+\end{align}
+
+donde $X_{estacional}(t)$ combina HDD y CDD con ponderadores trigonometricos mensuales. Los modelos se estimaron mediante minimos cuadrados ordinarios.
+
+\section{Resultados}
+
+\subsection{Comportamiento termico y consumo 2025}
+
+Los indicadores climaticos muestran una marcada estacionalidad. En los meses calidos, los valores de HDD fueron mayores al inicio y cierre del año; en los meses frios, CDD aumento especialmente durante invierno. El consumo total final mensual tambien presento variacion estacional: los maximos se observaron en junio, julio y agosto, con un pico de 30,65 GWh en julio.
+
+\begin{figure}[H]
+    \centering
+    \figplaceholder{figuras/hdd_cdd_2025.png}{Guardar desde el notebook el grafico de evolucion mensual de HDD y CDD.}
+    \caption{Evolucion mensual de HDD y CDD durante 2025.}
+    \label{fig:hdd-cdd}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Consumo total final mensual 2025 e indicadores termicos}
+\begin{tabular}{rrrr}
+\toprule
+Mes & Consumo (GWh) & HDD & CDD \\
+\midrule
+1 & 25,05 & 6,11 & 0,05 \\
+2 & 23,96 & 5,98 & 0,14 \\
+3 & 23,23 & 3,68 & 0,63 \\
+4 & 19,43 & 0,71 & 2,67 \\
+5 & 22,65 & 0,42 & 4,03 \\
+6 & 28,73 & 0,00 & 9,22 \\
+7 & 30,65 & 0,00 & 7,95 \\
+8 & 28,35 & 0,06 & 6,37 \\
+9 & 23,74 & 0,32 & 4,74 \\
+10 & 21,79 & 1,49 & 2,21 \\
+11 & 20,51 & 2,16 & 1,53 \\
+12 & 24,92 & 6,11 & 0,13 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Seleccion del modelo}
+
+El Modelo 1 obtuvo el mayor coeficiente de determinacion:
+
+\begin{equation}
+\widehat{C}(t)=15{,}3351 + 1{,}5264 \cdot HDD(t) + 1{,}7062 \cdot CDD(t).
+\end{equation}
+
+El ajuste tuvo $R^2=0{,}8572$ y $R^2$ ajustado de 0,825. Los coeficientes fueron positivos y estadisticamente significativos en el modelo OLS: $p=0{,}001$ para HDD y $p<0{,}001$ para CDD. Esto indica que, dentro de la muestra 2025, mayores desvios de temperatura respecto del umbral de confort se asociaron con mayor consumo agregado.
+
+\begin{table}[H]
+\centering
+\caption{Comparacion de modelos estimados sobre 2025}
+\begin{tabular}{lcc}
+\toprule
+Modelo & Formulacion & $R^2$ \\
+\midrule
+Modelo 1 & HDD y CDD separados & 0,8572 \\
+Modelo 2 & $X=HDD+CDD$ & 0,8390 \\
+Modelo 3 & Variable termica estacional & 0,7736 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La simplificacion del Modelo 2 perdio solo 0,0181 puntos de $R^2$ respecto del Modelo 1, por lo que conserva buena parte de la informacion climatica con menor complejidad. El Modelo 3, aunque incorporo una transformacion estacional explicita, no mejoro el ajuste y quedo por debajo de los otros dos modelos.
+
+\begin{figure}[H]
+    \centering
+    \figplaceholder{figuras/modelo1_real_vs_predicho_2025.png}{Guardar el grafico del Modelo 1 con consumo real y predicho.}
+    \caption{Consumo real y predicho por el Modelo 1 durante 2025.}
+    \label{fig:modelo1}
+\end{figure}
+
+\subsection{Validacion con datos 2026}
+
+Con las temperaturas observadas entre enero y abril de 2026, el Modelo 1 estimo un consumo total de 89,41 GWh y un promedio mensual de 22,35 GWh. La validacion se realizo comparando esas predicciones contra el consumo total final real y contra el modelo de factor estacional usado por la empresa.
+
+\begin{table}[H]
+\centering
+\caption{Comparacion de estimaciones enero-abril 2026}
+\begin{tabular}{rrrrrr}
+\toprule
+Mes & Modelo 1 & Empresa & Real & Error Modelo 1 & Error Empresa \\
+ & (GWh) & (GWh) & (GWh) & (\%) & (\%) \\
+\midrule
+1 & 23,63 & 24,03 & 24,00 & -1,57 & 0,12 \\
+2 & 23,35 & 21,83 & 20,71 & 12,74 & 5,41 \\
+3 & 21,23 & 21,81 & 20,52 & 3,46 & 6,26 \\
+4 & 21,20 & 19,67 & 18,24 & 16,25 & 7,84 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El MAPE del modelo de la empresa fue 4,91\%, mientras que el del Modelo 1 fue 8,51\%. En RMSE, la empresa obtuvo aproximadamente 1 GWh y el modelo termico 2 GWh. Por lo tanto, aunque el Modelo 1 explica una proporcion alta de la variabilidad mensual en 2025, su desempeno predictivo para enero-abril de 2026 fue inferior al del enfoque operativo basado en factor estacional.
+
+\begin{figure}[H]
+    \centering
+    \figplaceholder{figuras/comparacion_2026.png}{Guardar el grafico comparativo: Modelo 1, modelo empresa y consumo real 2026.}
+    \caption{Comparacion de estimaciones y consumo real para enero-abril 2026.}
+    \label{fig:comparacion-2026}
+\end{figure}
+
+\section{Conclusiones}
+
+El analisis muestra que las variables climaticas HDD y CDD son relevantes para explicar el consumo energetico agregado de clientes T1. La regresion multiple fue el modelo con mejor ajuste sobre 2025 y explico el 85,72\% de la variabilidad mensual observada. Los coeficientes positivos indican que tanto los desvios asociados a calor como los asociados a frio incrementan el consumo esperado.
+
+Sin embargo, la validacion con 2026 muestra una limitacion importante: un modelo exclusivamente termico no captura toda la dinamica del consumo. El modelo de la empresa, basado en factor estacional y demanda, produjo errores menores para enero-abril de 2026. Esto sugiere que la temperatura es una variable explicativa importante, pero no suficiente. Factores como calendario, comportamiento agregado de clientes, perdidas de red, actividad economica o cambios en habitos de consumo pueden aportar informacion adicional.
+
+Como extension, se recomienda construir un modelo hibrido que combine HDD, CDD, demanda diaria, variables calendario y rezagos de consumo. Tambien seria conveniente validar el desempeno con mas meses de 2026 y separar el analisis por subgrupos de clientes para evaluar si la sensibilidad termica cambia segun plan, zona o nivel de consumo.
+
+\section{Reflexion metodologica}
+
+El desarrollo del trabajo combino procesamiento en Python, interpretacion estadistica y asistencia de IA para ordenar el enfoque analitico, revisar alternativas de modelado y redactar explicaciones. La responsabilidad de validar resultados permanecio en el grupo: las salidas del notebook fueron contrastadas con las tablas intermedias, los modelos se compararon con metricas cuantitativas y las conclusiones se limitaron al alcance de los datos disponibles.
+
+El principal aprendizaje metodologico fue que un buen ajuste dentro de la muestra no garantiza superioridad predictiva frente a un modelo operativo. La comparacion externa con datos de 2026 permitio identificar que el componente termico explica mucho, pero que la estimacion de consumo requiere incorporar informacion de negocio y comportamiento agregado.
+
+\end{document}
