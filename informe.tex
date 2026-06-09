@@ -5,6 +5,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{siunitx}
@@ -44,7 +46,7 @@
 \maketitle
 
 \begin{center}
-\textbf{Integrantes:} Santiago Drelewicz, Didier Detchemendy y equipo.\\
+\textbf{Integrantes:} Didier Detchemendy, Santiago Drelewicz, y Yanina Colangelo.\\
 \textbf{Repositorio:} \url{https://github.com/SantiagoEzequielDrelewicz/TP-LMC}
 \end{center}
 
@@ -75,130 +77,140 @@ Las principales transformaciones fueron:
 Para representar el efecto climatico se fijo una temperatura de confort $T_c=20^\circ C$. A partir de temperaturas horarias se calcularon desvios positivos respecto de ese umbral:
 
 \begin{align}
-HDD &= \max(T - T_c, 0),\\
-CDD &= |\min(T - T_c, 0)|.
+HDD(t) &= \max\bigl(T_c - T(t), 0\bigr),\\
+CDD(t) &= \max\bigl(T(t) - T_c, 0\bigr).
 \end{align}
 
-Luego se promediaron los valores horarios a nivel diario y mensual. Con esos indicadores se evaluaron tres modelos:
+Luego se promediaron los valores horarios a nivel diario y mensual. A partir de esos indicadores se estimó el modelo seleccionado (Modelo 1) mediante mínimos cuadrados ordinarios:
 
 \begin{align}
-\text{Modelo 1: } C(t) &= B + \beta_c HDD(t) + \beta_f CDD(t),\\
-\text{Modelo 2: } C(t) &= B + m \cdot [HDD(t)+CDD(t)],\\
-\text{Modelo 3: } C(t) &= B + m \cdot X_{estacional}(t),
+\text{Modelo seleccionado (Modelo 1): } \quad \widehat{C}(t) &= B + \beta_{H}~HDD(t) + \beta_{C}~CDD(t).
 \end{align}
 
-donde $X_{estacional}(t)$ combina HDD y CDD con ponderadores trigonometricos mensuales. Los modelos se estimaron mediante minimos cuadrados ordinarios.
+Se consideraron alternativas más simples (p. ej. suma HDD+CDD) y una transformación estacional, pero dichas variantes no mejoraron el ajuste empírico sobre 2025 (ver párrafo comparativo en la subsección de selección).
 
 \section{Resultados}
 
 \subsection{Comportamiento termico y consumo 2025}
 
-Los indicadores climaticos muestran una marcada estacionalidad. En los meses calidos, los valores de HDD fueron mayores al inicio y cierre del año; en los meses frios, CDD aumento especialmente durante invierno. El consumo total final mensual tambien presento variacion estacional: los maximos se observaron en junio, julio y agosto, con un pico de 30,65 GWh en julio.
+Los indicadores climáticos presentan una marcada estacionalidad; la evolución anual de HDD y CDD y su correlación con el consumo total final mensual se visualizan en la figura \ref{fig:hdd-cdd}. El panel (a) (fig.~\ref{fig:hdd-cdd-a}) muestra la evolución estacional de HDD y CDD, mientras que el panel (b) (fig.~\ref{fig:hdd-cdd-b}) relaciona dichos indicadores con el consumo mensual, corroborando la correlación estacional entre variables térmicas y demanda. En 2025 los máximos de consumo se concentraron en junio–agosto, con un pico de 30,65 GWh en julio.
 
 \begin{figure}[H]
-    \centering
-    \figplaceholder{figuras/hdd_cdd_2025.png}{Guardar desde el notebook el grafico de evolucion mensual de HDD y CDD.}
-    \caption{Evolucion mensual de HDD y CDD durante 2025.}
-    \label{fig:hdd-cdd}
+\centering
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth, height=5.25cm]{figuras/evolucion_hdd_cdd_2025.png}
+\caption{Evolución mensual de HDD y CDD (2025).}
+\label{fig:hdd-cdd-a}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth, height=5.6cm, keepaspectratio]{figuras/consumo_total_final_vs_cdd_hdd.png}
+\caption{Consumo total final vs. indicadores térmicos (2025).}
+\label{fig:hdd-cdd-b}
+\end{subfigure}
+
+\caption{Comportamiento climático y su relación con el consumo en 2025.}
+\label{fig:hdd-cdd}
 \end{figure}
 
-\begin{table}[H]
+% Tabla de consumos mensuales (eliminada). Los valores mensuales se consultan en el notebook; en el texto se reporta el pico más relevante: 30,65 GWh en julio de 2025.
+
+\begin{figure}[H]
 \centering
-\caption{Consumo total final mensual 2025 e indicadores termicos}
-\begin{tabular}{rrrr}
-\toprule
-Mes & Consumo (GWh) & HDD & CDD \\
-\midrule
-1 & 25,05 & 6,11 & 0,05 \\
-2 & 23,96 & 5,98 & 0,14 \\
-3 & 23,23 & 3,68 & 0,63 \\
-4 & 19,43 & 0,71 & 2,67 \\
-5 & 22,65 & 0,42 & 4,03 \\
-6 & 28,73 & 0,00 & 9,22 \\
-7 & 30,65 & 0,00 & 7,95 \\
-8 & 28,35 & 0,06 & 6,37 \\
-9 & 23,74 & 0,32 & 4,74 \\
-10 & 21,79 & 1,49 & 2,21 \\
-11 & 20,51 & 2,16 & 1,53 \\
-12 & 24,92 & 6,11 & 0,13 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\includegraphics[width=0.5\linewidth]{figuras/sensibilidad_termica_consumo.png}
+\caption{Sensibilidad del consumo agregado respecto de HDD y CDD.}
+\label{fig:sensibilidad}
+\end{figure}
+
+La sensibilidad estimada del consumo agregado ante variaciones de HDD y CDD (fig. \ref{fig:sensibilidad}) indica la contribución relativa de cada indicador al consumo mensual agregado; los coeficientes estimados muestran magnitud comparable entre efectos de frío y calor, aunque su interpretación predictiva requiere validación fuera de muestra.
 
 \subsection{Seleccion del modelo}
 
-El Modelo 1 obtuvo el mayor coeficiente de determinacion:
+El Modelo 1 obtuvo el mayor coeficiente de determinación. La estimación resultante fue:
 
 \begin{equation}
-\widehat{C}(t)=15{,}3351 + 1{,}5264 \cdot HDD(t) + 1{,}7062 \cdot CDD(t).
+\widehat{C}(t)=15{,}3351 + 1{,}5264\, HDD(t) + 1{,}7062\, CDD(t).
 \end{equation}
 
-El ajuste tuvo $R^2=0{,}8572$ y $R^2$ ajustado de 0,825. Los coeficientes fueron positivos y estadisticamente significativos en el modelo OLS: $p=0{,}001$ para HDD y $p<0{,}001$ para CDD. Esto indica que, dentro de la muestra 2025, mayores desvios de temperatura respecto del umbral de confort se asociaron con mayor consumo agregado.
+El ajuste sobre 2025 alcanzó $R^2=0{,}8572$ ($R^2$ ajustado = 0,825). Los coeficientes son positivos y estadísticamente significativos (HDD: $p=0{,}001$; CDD: $p<0{,}001$). La concordancia temporal y la correspondencia puntual entre reales y predichos se presentan en la figura \ref{fig:modelo1} (paneles a y b; ver además \ref{fig:modelo1-a} y \ref{fig:modelo1-b}). El panel (b) complementa la evaluación al mostrar la dispersión puntual entre reales y predichos, lo que aporta información sobre la heterogeneidad de errores y la presencia relativa de desviaciones puntuales. En conjunto, estos elementos indican que, en la muestra 2025, los desvíos térmicos respecto de $T_c$ contribuyen de forma relevante al consumo agregado.
 
-\begin{table}[H]
-\centering
-\caption{Comparacion de modelos estimados sobre 2025}
-\begin{tabular}{lcc}
-\toprule
-Modelo & Formulacion & $R^2$ \\
-\midrule
-Modelo 1 & HDD y CDD separados & 0,8572 \\
-Modelo 2 & $X=HDD+CDD$ & 0,8390 \\
-Modelo 3 & Variable termica estacional & 0,7736 \\
-\bottomrule
-\end{tabular}
-\end{table}
+% Tabla de comparacion de modelos eliminada. Resumen: Modelo 1 (HDD y CDD separados) $R^2=0{,}8572$; Modelo 2 (HDD+CDD) $R^2=0{,}8390$; Modelo 3 (variable térmica estacional) $R^2=0{,}7736$. La simplificación a la suma (Modelo 2) reduce $R^2$ en 0,0181 puntos respecto de Modelo 1 y, por tanto, mantiene la mayor parte de la información climática con menor complejidad.
 
-La simplificacion del Modelo 2 perdio solo 0,0181 puntos de $R^2$ respecto del Modelo 1, por lo que conserva buena parte de la informacion climatica con menor complejidad. El Modelo 3, aunque incorporo una transformacion estacional explicita, no mejoro el ajuste y quedo por debajo de los otros dos modelos.
+
 
 \begin{figure}[H]
-    \centering
-    \figplaceholder{figuras/modelo1_real_vs_predicho_2025.png}{Guardar el grafico del Modelo 1 con consumo real y predicho.}
-    \caption{Consumo real y predicho por el Modelo 1 durante 2025.}
-    \label{fig:modelo1}
+\centering
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=5.25cm]{figuras/modelo_1_real_vs_predicho_2025.png}
+\caption{Serie temporal: consumo real y predicho (2025).}
+\label{fig:modelo1-a}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=5.6cm]{figuras/modelo_1_real_vs_predicho_scatter.png}
+\caption{Diagrama de dispersión valores reales vs predichos (2025).}
+\label{fig:modelo1-b}
+\end{subfigure}
+\caption{Evaluación del ajuste del Modelo 1: (a) serie temporal de reales y predichos; (b) correspondencia puntual entre reales y predichos.}
+\label{fig:modelo1}
 \end{figure}
 
 \subsection{Validacion con datos 2026}
 
-Con las temperaturas observadas entre enero y abril de 2026, el Modelo 1 estimo un consumo total de 89,41 GWh y un promedio mensual de 22,35 GWh. La validacion se realizo comparando esas predicciones contra el consumo total final real y contra el modelo de factor estacional usado por la empresa.
+La simplificacion del Modelo 2 perdio solo 0,0181 puntos de $R^2$ respecto del Modelo 1, por lo que conserva buena parte de la informacion climatica con menor complejidad. El Modelo 3, aunque incorporo una transformacion estacional explicita, no mejoro el ajuste y quedo por debajo de los otros dos modelos.
 
-\begin{table}[H]
+Con las temperaturas observadas entre enero y abril de 2026, el Modelo 1 estimó un consumo total de 89,41 GWh (promedio mensual 22,35 GWh). La validación comparó dichas predicciones con el consumo real y la estimación operativa de la empresa (figura \ref{fig:comparacion-2026}). En términos agregados, el MAPE de la empresa fue 4,91\% frente a 8,51\% del Modelo 1; en RMSE la empresa obtuvo ~1 GWh y el modelo térmico ~2 GWh. Estos indicadores cuantitativos respaldan la conclusión de que el modelo térmico, pese a un buen ajuste in-sample, ofrece menor precisión predictiva sobre el periodo de validación.
+
+Las distribuciones de error mensual entre predicción y real se muestran en la figura \ref{fig:error-porcentual} (paneles a y b; ver además \ref{fig:error-hdd} y \ref{fig:error-cdd}). El MAPE de la estimación operativa fue 4,91\%, frente a 8,51\% del Modelo 1; en RMSE la estimación operativa alcanzó ~1 GWh y el modelo térmico ~2 GWh. En consecuencia, el ajuste in-sample del Modelo 1 no se tradujo en mejor precisión predictiva sobre enero–abril de 2026; esto sugiere que, si bien HDD y CDD capturan una fracción importante de la variabilidad in-sample, resultan insuficientes por sí solos para reproducir la dinámica predictiva observada en 2026.
+
+\begin{figure}[H]
 \centering
-\caption{Comparacion de estimaciones enero-abril 2026}
-\begin{tabular}{rrrrrr}
-\toprule
-Mes & Modelo 1 & Empresa & Real & Error Modelo 1 & Error Empresa \\
- & (GWh) & (GWh) & (GWh) & (\%) & (\%) \\
-\midrule
-1 & 23,63 & 24,03 & 24,00 & -1,57 & 0,12 \\
-2 & 23,35 & 21,83 & 20,71 & 12,74 & 5,41 \\
-3 & 21,23 & 21,81 & 20,52 & 3,46 & 6,26 \\
-4 & 21,20 & 19,67 & 18,24 & 16,25 & 7,84 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-El MAPE del modelo de la empresa fue 4,91\%, mientras que el del Modelo 1 fue 8,51\%. En RMSE, la empresa obtuvo aproximadamente 1 GWh y el modelo termico 2 GWh. Por lo tanto, aunque el Modelo 1 explica una proporcion alta de la variabilidad mensual en 2025, su desempeno predictivo para enero-abril de 2026 fue inferior al del enfoque operativo basado en factor estacional.
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=5.2cm,keepaspectratio]{figuras/error_porcentual_vs_hdd.png}
+\caption{Error porcentual vs HDD.}
+\label{fig:error-hdd}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=5.2cm,keepaspectratio]{figuras/error_porcentual_vs_cdd.png}
+\caption{Error porcentual vs CDD.}
+\label{fig:error-cdd}
+\end{subfigure}
+\caption{Errores porcentuales de predicción en función de los indicadores térmicos (enero-abril 2026).}
+\label{fig:error-porcentual}
+\end{figure}
 
 \begin{figure}[H]
     \centering
-    \figplaceholder{figuras/comparacion_2026.png}{Guardar el grafico comparativo: Modelo 1, modelo empresa y consumo real 2026.}
-    \caption{Comparacion de estimaciones y consumo real para enero-abril 2026.}
+    \includegraphics[width=0.70\linewidth]{figuras/comparacion_modelo_1_empresa_consumo_total_final_2026.png}
+    \caption{Comparación de estimaciones y consumo real para enero-abril 2026.}
     \label{fig:comparacion-2026}
 \end{figure}
 
+% Respuesta explícita a la pregunta de investigación
+\subsection*{¿En qué medida HDD y CDD permiten explicar y predecir el consumo energético?}
+HDD y CDD explican una proporción substancial de la variabilidad mensual sobre la muestra de ajuste (2025): el modelo lineal múltiple con ambos indicadores alcanza $R^2=0{,}8572$, lo que implica que más del 85\\% de la varianza mensual queda explicada in-sample. Sin embargo, la validación sobre enero–abril de 2026 muestra que la capacidad predictiva es limitada: el MAPE agregado de la estimación operativa fue 4,91\% frente a 8,51\% del modelo térmico, y el RMSE operativo fue ~1 GWh frente a ~2 GWh. Por tanto, HDD y CDD permiten explicar de manera robusta el comportamiento agregado dentro de la muestra, pero su poder predictivo sobre el periodo de validación es insuficiente cuando se usan de forma exclusiva. Estas observaciones aconsejan integrar variables calendario, demanda y rezagos para mejorar la precisión predictiva.
+
 \section{Conclusiones}
 
-El analisis muestra que las variables climaticas HDD y CDD son relevantes para explicar el consumo energetico agregado de clientes T1. La regresion multiple fue el modelo con mejor ajuste sobre 2025 y explico el 85,72\% de la variabilidad mensual observada. Los coeficientes positivos indican que tanto los desvios asociados a calor como los asociados a frio incrementan el consumo esperado.
+Síntesis: HDD y CDD capturan una fracción sustantiva de la variabilidad mensual agregada —el modelo térmico alcanzó $R^2=0{,}8572$ sobre 2025— pero no aseguran precisión predictiva fuera de la muestra: en enero–abril de 2026 el MAPE del modelo térmico (8,51\%) fue superior al de la estimación operativa (4,91\%).
 
-Sin embargo, la validacion con 2026 muestra una limitacion importante: un modelo exclusivamente termico no captura toda la dinamica del consumo. El modelo de la empresa, basado en factor estacional y demanda, produjo errores menores para enero-abril de 2026. Esto sugiere que la temperatura es una variable explicativa importante, pero no suficiente. Factores como calendario, comportamiento agregado de clientes, perdidas de red, actividad economica o cambios en habitos de consumo pueden aportar informacion adicional.
+Implicaciones: las variables térmicas son insumo relevante para estimación agregada, pero su uso exclusivo limita la exactitud predictiva. Para aplicaciones operativas es recomendable complementar HDD/CDD con variables calendario, indicadores de demanda y rezagos de consumo, o bien incorporar modelos híbridos que permitan capturar efectos no térmicos.
 
-Como extension, se recomienda construir un modelo hibrido que combine HDD, CDD, demanda diaria, variables calendario y rezagos de consumo. Tambien seria conveniente validar el desempeno con mas meses de 2026 y separar el analisis por subgrupos de clientes para evaluar si la sensibilidad termica cambia segun plan, zona o nivel de consumo.
+Limitaciones: el análisis se concentra en agregados mensuales y en clientes T1; además, no se incluyeron variables socioeconómicas ni eventos extraordinarios que podrían explicar desviaciones puntuales. La periodización de validación (enero–abril 2026) es breve: extender la ventana mejorará la robustez de las conclusiones.
+
+Líneas futuras: 1) probar modelos híbridos (térmicos + calendario + demanda); 2) validar por subconjuntos de clientes; 3) aumentar horizonte de validación y considerar modelos con estructura de errores heterocedásticos o efectos no lineales.
 
 \section{Reflexion metodologica}
 
-El desarrollo del trabajo combino procesamiento en Python, interpretacion estadistica y asistencia de IA para ordenar el enfoque analitico, revisar alternativas de modelado y redactar explicaciones. La responsabilidad de validar resultados permanecio en el grupo: las salidas del notebook fueron contrastadas con las tablas intermedias, los modelos se compararon con metricas cuantitativas y las conclusiones se limitaron al alcance de los datos disponibles.
+El desarrollo combinó: (i) procesamiento y modelado reproducible en Python (el notebook contiene las transformaciones y cálculos), (ii) verificación humana de resultados intermedios y (iii) asistencia de IA para sintetizar, revisar coherencia y mejorar redacción. El equipo validó las salidas del notebook contra tablas intermedias y figuras antes de incluirlas en el informe.
 
-El principal aprendizaje metodologico fue que un buen ajuste dentro de la muestra no garantiza superioridad predictiva frente a un modelo operativo. La comparacion externa con datos de 2026 permitio identificar que el componente termico explica mucho, pero que la estimacion de consumo requiere incorporar informacion de negocio y comportamiento agregado.
+Ventajas del uso de IA: aceleró la revisión de estilo, detectó incoherencias y ayudó a compactar la exposición técnica. Limitaciones: la IA no sustituye la verificación numérica; todas las afirmaciones cuantitativas se contrastaron con el notebook y fueron aprobadas manualmente. Recomendación metodológica: usar IA como apoyo de redacción y revisión, manteniendo siempre la cadena de verificación reproducible (código $\to$ tablas intermedias $\to$ figuras $\to$ texto).
 
 \end{document}
