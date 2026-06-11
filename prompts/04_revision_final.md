@@ -1,5 +1,12 @@
 # Objetivo:
 
+Lee:
+- AGENTS.md
+- consigna_tp.pdf
+- tplmc.ipynb
+- informe.tex
+- presentacion.ppt
+
 Realizar una auditoría completa del proyecto antes de la entrega.
 
 Verificar:

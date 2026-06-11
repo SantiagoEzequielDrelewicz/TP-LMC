@@ -1,7 +1,7 @@
 Actúa como docente de la materia.
 
 Lee:
-
+- AGENTS.md
 - consigna_tp.pdf
 - tplmc.ipynb
 - informe.tex

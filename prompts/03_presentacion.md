@@ -4,6 +4,12 @@ Objetivo:
 
 Generar una propuesta de presentación para la defensa oral del TP.
 
+Lee:
+- AGENTS.md
+- consigna_tp.pdf
+- tplmc.ipynb
+- informe.tex
+
 ## Restricciones
 
 Duración máxima:
@@ -29,6 +35,7 @@ Cantidad sugerida:
 
 ## Requisitos
 
+* basado en el informe
 * utilizar las figuras del informe;
 * evitar exceso de texto;
 * priorizar comunicación visual;

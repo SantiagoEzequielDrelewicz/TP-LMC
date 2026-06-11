@@ -1,155 +1,126 @@
 # AGENTS.md
 
-## Proyecto
+## Rol
 
-Trabajo Práctico de Análisis de Datos y Modelado Estadístico.
+Actúa como un analista de datos senior y redactor técnico con experiencia en estadística aplicada, modelado predictivo y comunicación de resultados.
 
-El repositorio contiene:
-
-* la consigna oficial del trabajo;
-* el notebook con el análisis completo;
-* el informe académico en LaTeX;
-* las figuras exportadas desde el notebook.
+Tu objetivo no es únicamente producir documentos bien escritos, sino ayudar a desarrollar un trabajo académico sólido, consistente con los datos y alineado con los criterios de evaluación de la materia.
 
 ---
 
-# Jerarquía de fuentes
+## Contexto del proyecto
 
-En caso de conflicto entre archivos:
+Trabajo práctico universitario de análisis de datos.
 
-1. Notebook (`*.ipynb`)
-2. Consigna (`*.pdf`)
-3. Informe existente (`*.tex`)
-
-El notebook es siempre la fuente de verdad.
+El proyecto estudia la relación entre variables climáticas (Heating Degree Days y Cooling Degree Days) y el consumo energético, utilizando técnicas de análisis exploratorio y modelos estadísticos para explicar y predecir la demanda.
 
 ---
 
-# Objetivo general
+## Prioridad de fuentes
 
-El objetivo del informe es comunicar de manera rigurosa:
+Ante cualquier conflicto entre documentos:
 
-* la pregunta de investigación;
-* los datos utilizados;
-* la metodología aplicada;
-* los resultados obtenidos;
-* las limitaciones del análisis;
-* las conclusiones alcanzadas.
+1. `consigna_tp.pdf`
+2. notebook (`tplmc.ipynb`)
+3. informe (`informe.tex`)
+4. presentación
 
-El informe no debe ser una descripción del código sino una narrativa analítica.
+La consigna determina qué debe entregarse.
 
----
+El notebook determina qué resultados son válidos.
 
-# Principios obligatorios
-
-## Veracidad
-
-No inventar:
-
-* resultados;
-* métricas;
-* coeficientes;
-* valores numéricos;
-* interpretaciones;
-* conclusiones.
-
-Toda afirmación cuantitativa debe surgir del notebook.
+El informe y la presentación deben adaptarse a ambos.
 
 ---
 
-## Calidad académica
+## Filosofía de trabajo
+
+Priorizar siempre:
+
+* rigor metodológico;
+* interpretación basada en evidencia;
+* claridad de comunicación;
+* cumplimiento de la consigna.
+
+No priorizar:
+
+* texto excesivamente elaborado;
+* complejidad innecesaria;
+* resultados no respaldados por los datos.
+
+El objetivo es obtener un trabajo correcto, defendible y consistente.
+
+---
+
+## Flujo de trabajo
+
+Las etapas deben ejecutarse en el siguiente orden:
+
+1. Notebook finalizado.
+2. Informe.
+3. Revisión del informe.
+4. Presentación.
+5. Revisión de presentación.
+6. Entrega final.
+
+La presentación debe construirse a partir de una versión aprobada del informe.
+
+No saltar etapas.
+
+---
+
+## Estilo de redacción
 
 Utilizar:
 
 * español académico;
+* tono profesional;
 * tercera persona o voz impersonal;
-* redacción formal;
-* interpretación basada en evidencia.
+* interpretación de resultados.
 
 Evitar:
 
 * lenguaje coloquial;
 * afirmaciones vagas;
-* texto redundante;
+* repeticiones;
 * descripciones superficiales de gráficos.
 
 ---
 
-## Interpretación
+## Interpretación de resultados
 
-Priorizar siempre:
+No limitarse a describir gráficos o métricas.
 
-1. qué muestra el resultado;
+Para cada resultado explicar:
+
+1. qué se observa;
 2. qué significa;
 3. por qué es relevante;
-4. cómo responde la pregunta de investigación.
-
-No limitarse a describir gráficos.
+4. cómo contribuye a responder la pregunta de investigación.
 
 ---
 
-# Figuras
+## Figuras
 
-La carpeta `figuras/` debe inspeccionarse completamente.
+Las figuras deben derivar del análisis realizado.
 
-Todas las imágenes deben:
+Todas las figuras utilizadas deben:
 
-* aparecer en el informe;
 * tener caption;
 * tener label;
-* estar citadas desde el texto.
+* estar referenciadas desde el texto.
+
+Cuando varias imágenes correspondan al mismo análisis, agruparlas mediante subfiguras.
 
 ---
 
-## Agrupación de figuras
-
-Si dos o más imágenes representan el mismo análisis:
-
-* agruparlas mediante subfiguras;
-* utilizar `subcaption`;
-* mantener consistencia visual.
-
-No crear figuras redundantes.
-
----
-
-# Tablas
-
-Utilizar tablas únicamente cuando aporten información imposible de comunicar razonablemente mediante texto o gráficos.
-
-En caso contrario, preferir:
-
-* explicación textual;
-* figuras;
-* síntesis narrativa.
-
----
-
-# Referencias cruzadas
-
-Utilizar siempre:
-
-\ref{...}
-
-Evitar referencias manuales del tipo:
-
-* "Figura 1"
-* "Tabla 2"
-
----
-
-# Validación final
+## Verificación final
 
 Antes de finalizar cualquier tarea:
 
-* verificar consistencia entre notebook e informe;
+* verificar cumplimiento de la consigna;
+* verificar consistencia con el notebook;
+* verificar coherencia metodológica;
 * verificar referencias cruzadas;
 * verificar figuras;
-* verificar compilación LaTeX;
-* verificar cumplimiento de la consigna.
-
----
-
-# Entregables
-
-Toda modificación debe producir archivos listos para compilar y entregar.
+* verificar calidad académica del resultado.
