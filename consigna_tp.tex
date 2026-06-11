@@ -1,0 +1,218 @@
+\documentclass[10pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=cyan,}
+\urlstyle{same}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+
+\DeclareUnicodeCharacter{2192}{\ifmmode\rightarrow\else{$\rightarrow$}\fi}
+
+\begin{document}
+\section*{Trabajo Práctico Grupal}
+Exploración, análisis y presentación de datos reales asistida por IA
+
+Modalidad: grupos de hasta 5 integrantes\\
+Código: Google Colab (exportado a .ipynb en GitHub)\\
+Informe: PDF académico (LaTeX/Overleaf o Word), subido al repositorio\\
+Presentación: herramienta de IA a elección (Canva, PowerPoint Copilot, Gamma, sitio web, etc.)\\
+Repositorio: GitHub grupal con commits de todos los integrantes\\
+Entrega: jueves 11 de junio de 2026, hasta las 19:00 h\\
+1er Cuatrimestre 2026
+
+\section*{Descripción general}
+Este trabajo integra las herramientas vistas en la materia con una base de datos que cada grupo elige libremente. El análisis se realiza en Python (Google Colab), se documenta en un informe con estilo académico (Overleaf/EATEX) y se comunica mediante una presentación producida con herramientas de inteligencia artificial. El uso de IA como asistente está permitido y alentado en todas las etapas; la interpretación de los resultados y el criterio analítico son responsabilidad exclusiva del grupo.
+
+Se valorará especialmente la originalidad en la elección del tema, la creatividad en el análisis y la solidez de las conclusiones.
+
+Condición de aprobación. Las tres partes son obligatorias e independientes. La ausencia de cualquiera de ellas, o la entrega de un notebook sin ejecutar, implica descuento automático con independencia de la calidad del resto del trabajo.
+
+\section*{1. Inscripción del grupo y elección del tema}
+La formación del grupo y la elección del dataset se registran mediante el siguiente formulario. Solo un integrante por grupo debe completarlo. Fecha límite para completar el formulario: 26 de abril de 2026.
+
+→ Formulario de inscripción grupal (completar antes de comenzar)
+
+El formulario solicita: nombre y número de registro de cada integrante, nombre de usuario de GitHub de cada uno, link al repositorio del grupo, dataset elegido, fuente y pregunta principal que el grupo pretende responder.
+
+Repositorio de GitHub del grupo. Cada grupo debe crear un repositorio con todos los integrantes como colaboradores. El repositorio debe contener: el notebook exportado en formato .ipynb, el PDF del informe académico, el dataset (o instrucciones para obtenerlo) y cualquier otro archivo relevante. Se revisará el historial de commits de todos los integrantes para verificar participación activa y evitar la figura del freerider: un integrante sin commits significativos no acredita el trabajo grupal.
+
+\section*{2. Elección del dataset}
+El grupo elige libremente el dataset. No existe restricción temática: se aceptan datos económicos, deportivos, culturales, científicos o de cualquier área de interés. Se destaca y valora la originalidad en la elección del tema.
+
+Algunos ejemplos posibles (ilustrativos, no limitativos):
+
+\begin{itemize}
+  \item Estadísticas de fútbol: goles, pases, transferencias, rendimiento por liga o club.
+  \item Música: reproducciones por género, características de audio, evolución de artistas por período.
+  \item Pokémon: estadísticas de combate, tipos, generaciones, evoluciones.
+  \item Videojuegos: precios, ventas y valoraciones por plataforma y región.
+  \item Datos climáticos, de calidad del aire, de movilidad urbana o de salud pública.
+  \item Indicadores macroeconómicos, financieros, de comercio exterior o de mercado laboral.
+  \item Series de tiempo de criptomonedas, commodities o mercados financieros emergentes.
+  \item Datos de transporte público, Airbnb, delitos urbanos o resultados electorales.
+\end{itemize}
+
+\section*{Fuentes sugeridas:}
+\begin{itemize}
+  \item INDEC - IPC, EMAE, empleo, comercio exterior
+  \item \href{http://datos.gob.ar}{datos.gob.ar} - datos abiertos del Estado Nacional
+  \item BCRA - series monetarias y tipo de cambio
+  \item Banco Mundial - indicadores macro por país
+  \item Our World in Data - series largas de desarrollo
+  \item CEPAL - estadísticas de América Latina
+  \item Ministerio de Economía - presupuesto y deuda
+  \item Yahoo Finance - activos vía yfinance
+  \item Kaggle Datasets - amplia variedad temática
+  \item FBref / SofaScore - fútbol
+  \item Spotify API - música
+  \item PokéAPI - Pokémon
+  \item Pro Football Reference - NFL
+  \item Basketball Reference - NBA
+  \item OpenWeatherMap API - clima
+  \item Meteorología Argentina - clima local
+  \item IMDb Datasets - cine y series
+  \item UN Data - estadísticas de Naciones Unidas
+  \item OECD Data - países desarrollados
+  \item Socrata Open Data - datos urbanos y gubernamentales
+  \item \href{http://datos.jus.gob.ar}{datos.jus.gob.ar} - justicia y seguridad
+  \item GitHub Datasets - datasets curados en repositorios públicos
+\end{itemize}
+
+\section*{3. Parte 1 - Análisis en Python (Google Colab)}
+El notebook debe estar completamente ejecutado al momento de la entrega y exportado en formato . ipynb al repositorio de GitHub. Cada bloque de código debe ir precedido por una celda Markdown que explique qué se hace y por qué.
+
+Sobre el uso de IA en el análisis. Se recomienda construir un agente con contexto enriquecido: embeber al modelo (Claude, ChatGPT u otro) con el enunciado de este trabajo, los notebooks y PDFs del repositorio del curso que consideren relevantes, y cualquier material propio del grupo (diccionario de datos, paper de referencia, etc.). Cuanto más contexto recibe el agente, mejores y más pertinentes serán sus sugerencias.
+
+Para optimizar el trabajo en equipo y con la IA se recomienda usar proyectos (Claude Projects, ChatGPT Projects) donde todos los integrantes comparten el mismo contexto, y explorar repositorios de prompts especializados como awesome-chatgpt-prompts o Prompt Engineering Guide para encontrar instrucciones ya probadas. A continuación, dos ejemplos de prompts de esos repositorios adaptados a este trabajo:
+
+Ejemplo 1 - Rol de analista de datos (adaptado de awesome-chatgpt-prompts)\\[0pt]
+«Actuá como un analista de datos senior. Te voy a compartir un dataset de [tema elegido]. Tu tarea es: (1) identificar las variables más relevantes para responder [pregunta de investigación], (2) sugerir transformaciones útiles, (3) proponer qué tipo de gráfico comunica mejor cada hallazgo, y (4) señalar limitaciones del dataset que puedan afectar las conclusiones. Respondé en español y justificá cada decisión.»
+
+Ejemplo 2 - Chain-of-thought para interpretación económica (adaptado de Prompt Engineering Guide)\\[0pt]
+«Pensá paso a paso. Dado el siguiente resultado de mi análisis: [pegar output del notebook], explicá qué significa económicamente, si es consistente con la teoría vista en clase, qué factores podrían explicar un resultado inesperado y qué conclusión debería incluir en el informe académico.»
+
+En el notebook debe indicarse qué celdas contaron con asistencia de IA y qué instrucción (prompt) se utilizó.
+
+\subsection*{3.1. Carga y exploración inicial}
+a) Cargar el dataset en un DataFrame de pandas y mostrar las primeras y últimas filas con .head() y .tail().\\
+b) Describir la estructura: dimensiones, columnas, tipos de dato (.dtypes) y cobertura temporal o geográfica.\\
+c) Analizar la calidad: valores nulos (.isnull().sum()), duplicados y estadísticas descriptivas (.describe()). Comentar los hallazgos antes de continuar.
+
+\subsection*{3.2. Pregunta de investigación}
+Una vez realizada la exploración inicial del dataset, el grupo debe definir con precisión la pregunta central que guiará el resto del análisis. En el notebook, incluir una celda Markdown que responda explícitamente:\\
+a) ¿Cuál es la pregunta? Formulada de manera clara y acotada; debe ser respondible con los datos disponibles.\\
+b) ¿Por qué vale la pena responderla? Motivación del análisis: qué decisión, fenómeno o problema ilumina esta pregunta.\\
+c) ¿Qué respuesta encontraron? Al finalizar el análisis, el grupo vuelve a esta celda y completa la respuesta con los hallazgos concretos obtenidos.
+
+Esta pregunta es el hilo conductor del trabajo: el informe, los gráficos y la presentación deben orbitar alrededor de ella y su respuesta.
+
+\subsection*{3.3. Transformaciones y resumen estadístico}
+a) Realizar al menos dos transformaciones justificadas (filtrar filas, convertir tipos, crear columnas derivadas, manejar nulos) y explicar la decisión detrás de cada una.\\
+b) Calcular al menos dos estadísticos de resumen agrupados con .groupby() e interpretar los resultados en relación con la pregunta planteada.
+
+\subsection*{3.4. Análisis gráfico}
+Se deben producir mínimo tres gráficos de tipos distintos:\\
+a) Evolución temporal o distribución: serie principal, histograma o boxplot según corresponda.\\
+b) Comparación entre categorías: barras simples o apiladas con ejes etiquetados y unidades.\\
+c) Relación entre dos variables: diagrama de dispersión o líneas superpuestas; señalar patrones de interés.
+
+Cada gráfico requiere título, etiquetas en ambos ejes y celda Markdown con interpretación. No es suficiente describir lo que se ve; se debe explicar qué significa en el contexto del dataset. Los gráficos se exportan como imágenes (plt.savefig()) para incluirlos en el informe.
+
+\subsection*{3.5. Aplicación de conceptos de la materia}
+Esta sección constituye el núcleo analítico del trabajo. El grupo elige una de las siguientes aplicaciones según la naturaleza de sus datos. El análisis puede implementarse de manera discreta o continua según corresponda.
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Concepto & Qué implementar \\
+\hline
+Funciones de costo e ingreso & Modelar $C T, I T$ y beneficio; identificar punto de equilibrio. \\
+\hline
+Elasticidad & Calcular elasticidad-arco entre dos períodos o categorías; clasificar e interpretar. \\
+\hline
+Margen y rentabilidad & Margen unitario, ganancia total y participación porcentual por categoría. \\
+\hline
+Análisis de mercado & Evaluar la variación de demanda o precio ante un shock externo. \\
+\hline
+Derivadas e integrales & Tasas de cambio, máximos/mínimos, áreas bajo curvas o acumulaciones. Forma analítica (sympy) o numérica (numpy). \\
+\hline
+Optimización & Nivel óptimo de una variable mediante condiciones de primer o segundo orden. \\
+\hline
+Insumo-producto (Leontief) & Con datos sectoriales: coeficientes técnicos y multiplicadores de producción. \\
+\hline
+\end{tabular}
+\end{center}
+
+Para la aplicación elegida: (a) implementar una función Python documentada con docstring; (b) aplicarla al dataset y presentar los resultados en tabla o gráfico; (c) interpretar qué indica el resultado, si es consistente con la teoría y qué implicancias tiene para la pregunta de investigación.
+
+\section*{4. Parte 2 - Informe académico (a elección: $\mathrm{LAT}_{\mathrm{E}} \mathrm{X}$ o Word)}
+El grupo debe producir un informe académico en PDF con el estilo de un paper o informe de investigación aplicada. Se puede elegir una de las dos opciones siguientes para su elaboración.
+
+Opción A - LaTeX en Overleaf (recomendada). Se redacta el informe directamente en Overleaf, o se solicita a un agente de IA (Claude, ChatGPT u otro) que genere el contenido en un archivo .txt con formato EATEX, que luego se compila en Overleaf. Esta opción permite mayor control tipográfico, numeración automática de figuras y referencias cruzadas. El link al proyecto Overleaf debe incluirse en el repositorio de GitHub.
+
+Opción B - Word o Google Docs, exportado a PDF. Se redacta el informe en Microsoft Word o Google Docs con asistencia de IA, respetando la misma estructura académica. El archivo final debe exportarse a PDF y subirse al repositorio de GitHub. Se recomienda usar estilos de título, numeración de figuras y un índice automático para mantener el aspecto formal.
+
+En ambos casos, el documento debe ser autónomo: un lector externo debe poder comprender qué se hizo, qué se encontró y qué se concluye sin abrir el notebook.
+
+Proceso de revisión en dos etapas. Dado que el informe se redacta con asistencia de IA, es indispensable un proceso de auditoría humana:
+
+\begin{enumerate}
+  \item Revisión intragrupal. Cada integrante lee el informe de forma independiente y contrasta las afirmaciones con el notebook y los datos originales. El grupo consolida los comentarios y corrige antes de cerrar el documento. Esta etapa es obligatoria.
+  \item Validación externa (recomendada para reducir sesgo). El grupo intercambia el informe\\
+con otro grupo. Un lector externo detecta errores que la familiaridad con el propio trabajo vuelve invisibles. Los comentarios recibidos deben incorporarse o responderse en la reflexión metodológica.
+\end{enumerate}
+
+\section*{Estructura mínima esperada:}
+§1. Resumen (abstract, 5-8 líneas): síntesis del trabajo, metodología y principales hallazgos.\\
+§2. Introducción ( $1 / 2$ pág.): motivación, dataset, fuente y pregunta principal.\\
+§3. Datos y metodología ( $1 / 2$ pág.): variables, estructura, transformaciones y herramientas.\\
+§4. Resultados ( $1-2$ pág.): gráficos exportados desde Colab, tablas e interpretación.\\
+§5. Conclusiones ( $1 / 2$ pág.): hallazgos principales, limitaciones y posibles extensiones.\\
+§6. Reflexión metodológica ( $1 / 4$ pág.): uso de IA, revisiones realizadas y aprendizajes.\\
+Extensión. Entre 3 y 5 páginas, sin contar portada ni referencias. Redacción en tercera persona o impersonal. El PDF final debe subirse al repositorio de GitHub del grupo.
+
+\section*{5. Parte 3 - Defensa y presentación con herramientas de IA}
+Todos los grupos defienden su trabajo en vivo el viernes 12 de junio, en el horario habitual de clase. Cada grupo dispone de un máximo de $\mathbf{1 0}$ minutos (incluyendo preguntas), por lo que la exposición en sí no debe extenderse más de 5 a 7 minutos. Deben estar todos los integrantes presentes. Se evalúa la claridad comunicacional y la coherencia con el análisis; no la complejidad técnica de la producción.
+
+La defensa se apoya en una presentación de diapositivas obligatoria producida con IA, a la que se puede sumar de forma opcional un video o un sitio web como complemento. La estructura es la siguiente:
+
+\section*{Presentación de diapositivas - obligatoria para todos los grupos}
+Producida con Canva (Magic Design / Canva IA) o PowerPoint con Copilot. El contenido, guión y narrativa son responsabilidad del grupo; la IA asiste en diseño, estructura y redacción. Entre 6 y 10 diapositivas calibradas para una exposición de $5-7$ minutos. El PDF o link de la presentación debe subirse al repositorio de GitHub.
+
+\section*{Complemento opcional - elegir 1 de 2 (o ninguno)}
+Opción 1 - Video explicativo con IA. Video de 2-4 minutos que recorre los hallazgos del análisis. Guión redactado por el grupo y revisado con IA. Narración propia o generada con ElevenLabs. Edición con CapCut, Canva Video o Descript. El link debe subirse al repositorio. Durante la defensa, el grupo puede reproducir fragmentos del video como parte de su exposición.
+
+Material de referencia: tutoriales y ejemplos de videos en \href{http://drive.google.com}{drive.google.com} → Carpeta de recursos: videos y páginas web
+
+Opción 2 - Sitio web desplegado con IA. Generado y desplegado con asistencia de IA: Claude o ChatGPT para el código HTML/CSS/JS; Streamlit con deploy en Streamlit Community Cloud; o GitHub Pages. El sitio debe incluir los tres gráficos, los resultados y\\
+las conclusiones. El link público debe estar en el repositorio. Durante la defensa, el grupo puede navegar el sitio en vivo como complemento a las diapositivas.
+
+\section*{Material de referencia:}
+\begin{itemize}
+  \item Guía de introducción a HTML, CSS y JS: GitHub del curso → HTML, CSS \& JS Desarrollo pág. web
+  \item Tutoriales y ejemplos adicionales: \href{http://drive.google.com}{drive.google.com} → Carpeta de recursos: videos y páginas web
+\end{itemize}
+
+Nota. Si el grupo encuentra otra forma creativa de articular IA con una presentación efectiva (por ejemplo, Gamma.app o \href{http://Napkin.ai}{Napkin.ai}), puede proponerla al docente para su aprobación. El tiempo de cada grupo está sujeto a la cantidad total de grupos inscriptos; organicen el contenido para no superar los 5-7 minutos de exposición.
+
+\section*{Entrega - jueves 11 de junio de 2026, hasta las 19:00 h}
+El entregable es un único documento PDF enviado a través del campus virtual, que debe contener:
+
+\begin{enumerate}
+  \item Portada del grupo: nombre completo, número de registro y nombre de usuario de GitHub de cada integrante, y link al repositorio de GitHub del grupo.
+  \item Entregable de la Parte 3: link a la presentación, al sitio público y/o al video según la opción elegida.
+\end{enumerate}
+
+El repositorio de GitHub debe contener al momento de la entrega, como mínimo: el notebook exportado en formato . ipynb, el PDF del informe académico, el dataset o instrucciones para descargarlo, y el archivo o link de la presentación. Se revisará el historial de commits de cada integrante.
+
+Participación individual. Un integrante sin commits significativos en el repositorio no acredita el trabajo grupal, independientemente de lo declarado en el PDF de entrega.
+
+Consultas por correo electrónico o durante la clase práctica. Laboratorio de Métodos Cuantitativos Aplicados a la Gestión • FCE UBA • 1er Cuatrimestre 2026
+
+
+\end{document}
