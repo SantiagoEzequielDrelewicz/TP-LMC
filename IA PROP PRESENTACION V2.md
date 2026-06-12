@@ -93,7 +93,7 @@
 - CDD domina en meses fríos.
 - HDD domina en meses cálidos.
 - El consumo máximo se concentró en invierno.
-- Pico observado: junio 2025
+- Pico observado: julio 2025, 30,65 GWh
 
 **Figura del informe:**
 
@@ -165,8 +165,8 @@
 
 **Diseño sugerido:**
 
-- Gráfico real vs. predicho como visual principal.
-- Scatter real vs. predicho como visual secundario.
+- Gráfico consumo total final vs. predicho como visual principal.
+- Scatter consumo total final vs. predicho como visual secundario.
 - Métrica R² en grande, como número central.
 
 **Guion oral sugerido:**
@@ -197,7 +197,7 @@
 
 **Diseño sugerido:**
 
-- Arriba: gráfico comparativo de consumo real, Modelo 1 y empresa.
+- Arriba: gráfico comparativo de consumo total final, Modelo 1 y empresa.
 - Abajo: dos tarjetas de métricas:
   - **Modelo 1:** MAPE 8,51 %, RMSE ~2 GWh.
   - **Empresa:** MAPE 4,91 %, RMSE ~1 GWh.
@@ -218,7 +218,7 @@
 
 **Conclusiones**
 
-- HDD y CDD explican una proporción sustantiva del consumo mensual 2025.
+- HDD y CDD explican una proporción sustancial del consumo mensual 2025.
 - El Modelo 1 es el mejor ajuste entre las alternativas evaluadas.
 - La validación 2026 muestra menor precisión que el método de la empresa.
 
