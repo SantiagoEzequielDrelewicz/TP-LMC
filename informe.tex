@@ -68,9 +68,8 @@ Las principales transformaciones fueron:
 
 \begin{itemize}
     \item Se excluyeron clientes con fecha de baja para trabajar sobre clientes activos.
-    \item Se convirtieron columnas numericas almacenadas como texto con coma decimal, como \texttt{PROMEDIO CONSUMO}, \texttt{FACTOR ESTACIONAL} y \texttt{CONSUMO TOTAL FINAL}.
-    \item Se transformo \texttt{REFERENCIA} al mes correspondiente, dado que todos los registros de entrenamiento pertenecian a 2025.
-    \item Para evitar duplicacion mensual por cliente, se conservo la ultima lectura de cada combinacion cliente-mes.
+    \item Se convirtieron columnas numéricas almacenadas como texto con coma decimal, como \texttt{PROMEDIO CONSUMO}, \texttt{FACTOR ESTACIONAL} y \texttt{CONSUMO TOTAL FINAL}.
+    \item Para evitar duplicacion mensual por cliente, se conservo la última lectura de cada combinacion cliente-mes.
     \item Se agregaron consumos por mes y se expresaron en GWh para estabilizar la escala del ajuste.
 \end{itemize}
 
@@ -84,10 +83,10 @@ CDD(t) &= \max\bigl(T(t) - T_c, 0\bigr).
 Luego se promediaron los valores horarios a nivel diario y mensual. A partir de esos indicadores se estimó el modelo seleccionado (Modelo 1) mediante mínimos cuadrados ordinarios:
 
 \begin{align}
-\text{Modelo seleccionado (Modelo 1): } \quad \widehat{C}(t) &= B + \beta_{H}~HDD(t) + \beta_{C}~CDD(t).
+\text{Modelo seleccionado Modelo 1:} \quad \widehat{C}(t) &= B + \beta_{H}~HDD(t) + \beta_{C}~CDD(t).
 \end{align}
 
-Se consideraron alternativas más simples (p. ej. suma HDD+CDD) y una transformación estacional, pero dichas variantes no mejoraron el ajuste empírico sobre 2025 (ver párrafo comparativo en la subsección de selección).
+Se consideraron alternativas más simples (p. ej. suma Modelo 2: HDD+CDD) y una transformación estacional (Modelo 3), pero dichas variantes no mejoraron el ajuste empírico sobre 2025.
 
 \section{Resultados}
 
@@ -160,8 +159,6 @@ El ajuste sobre 2025 alcanzó $R^2=0{,}8572$ ($R^2$ ajustado = 0,825). Los coefi
 \end{figure}
 
 \subsection{Validacion con datos 2026}
-
-La simplificacion del Modelo 2 perdio solo 0,0181 puntos de $R^2$ respecto del Modelo 1, por lo que conserva buena parte de la informacion climatica con menor complejidad. El Modelo 3, aunque incorporo una transformacion estacional explicita, no mejoro el ajuste y quedo por debajo de los otros dos modelos.
 
 Con las temperaturas observadas entre enero y abril de 2026, el Modelo 1 estimó un consumo total de 89,41 GWh (promedio mensual 22,35 GWh). La validación comparó dichas predicciones con el consumo real y la estimación operativa de la empresa (figura \ref{fig:comparacion-2026}). En términos agregados, el MAPE de la empresa fue 4,91\% frente a 8,51\% del Modelo 1; en RMSE la empresa obtuvo ~1 GWh y el modelo térmico ~2 GWh. Estos indicadores cuantitativos respaldan la conclusión de que el modelo térmico, pese a un buen ajuste in-sample, ofrece menor precisión predictiva sobre el periodo de validación.
 
